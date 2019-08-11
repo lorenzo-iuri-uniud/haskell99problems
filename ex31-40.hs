@@ -66,3 +66,15 @@ totientImproved n = round $ foldl (*) 1 $ map phi $ map coupleFromIntegral $ pri
 --39: primes within range
 primesR :: Int -> Int -> [Int]
 primesR a z = filter (>= a) (primesUntil z)
+
+--40: find the goldbach primes of the input even number
+goldbach :: Int -> (Int, Int)
+goldbach n | odd n = error "input must be even"
+           | n <= 2 = error "input must be > 2"
+           | otherwise = head $ [(a,b) | a <- (primesBefore n),
+                                         b <- (primesBefore n),
+                                         a+b==n ]
+
+--41: find the goldbach primes for a range
+goldbachR :: Int -> Int -> [(Int,Int)]
+goldbachR a z = map goldbach $ filter even $ filter (> 2) [a..z]
